@@ -9,4 +9,8 @@ export default styled(Link)`
     color: #ccc;
     margin-left: 10px;
     float: left;
+    
+    @media screen and (max-width: 850px) {
+      display: none;
+    }
 `;

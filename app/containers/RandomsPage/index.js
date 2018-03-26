@@ -9,6 +9,7 @@ import H1 from '../../components/H1';
 import List from './List';
 import ListItem from './ListItem';
 import ListItemTitle from './ListItemTitle';
+import ListItemText from './ListItemText';
 import injectReducer from '../../utils/injectReducer';
 import injectSaga from '../../utils/injectSaga';
 import { getRandoms } from '../../actions/randomsPageActions';
@@ -27,9 +28,11 @@ class RandomsPage extends React.PureComponent { // eslint-disable-line react/pre
     const entries = randoms.map((entry) => (
       <ListItem key={entry.entry.id}>
         <ListItemTitle>
-          {entry.topic.title.toLowerCase()}
+          {entry.topic.title}
         </ListItemTitle>
-        <p>{entry.entry.text.toLowerCase()}</p>
+        <ListItemText>
+          {entry.entry.text}
+        </ListItemText>
       </ListItem>
     ));
 
@@ -40,7 +43,7 @@ class RandomsPage extends React.PureComponent { // eslint-disable-line react/pre
           <meta name="description" content="randoms of saü sözlük" />
         </Helmet>
         <H1>
-          # randoms
+          randoms
         </H1>
         <List>
           {entries}

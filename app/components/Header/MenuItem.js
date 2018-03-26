@@ -6,12 +6,17 @@ export default styled.li`
     padding: 5px 8px;
     border-radius: 2px;
     line-height: 18px;
-    font-size: 9pt;
+    font-size: 8pt;
     cursor: pointer;
     margin-top: 6px;
     
+    & > a {
+      font-size: 9pt;
+    }
+    
     & > a, svg {
       color: #ccc;
+      cursor: pointer;
     }
     
     &:hover {

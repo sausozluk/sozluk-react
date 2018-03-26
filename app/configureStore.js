@@ -3,6 +3,7 @@ import { fromJS } from 'immutable';
 import { routerMiddleware } from 'react-router-redux';
 import createSagaMiddleware from 'redux-saga';
 import createReducer from './reducers';
+import { loadingBarMiddleware } from 'react-redux-loading-bar';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -11,6 +12,9 @@ export default function configureStore(initialState = {}, history) {
   // 1. sagaMiddleware: Makes redux-sagas work
   // 2. routerMiddleware: Syncs the location/URL path to the state
   const middlewares = [
+    loadingBarMiddleware({
+      promiseTypeSuffixes: ['REQUEST', 'SUCCESS', 'FAILURE'],
+    }),
     sagaMiddleware,
     routerMiddleware(history),
   ];

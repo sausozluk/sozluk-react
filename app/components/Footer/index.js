@@ -6,7 +6,7 @@ function Footer() {
   return (
     <Wrapper>
       <section>
-        eray arslan
+        saü sözlük
       </section>
     </Wrapper>
   );

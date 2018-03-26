@@ -7,15 +7,29 @@ import FeaturePage from '../RandomsPage/Loadable';
 import NotFoundPage from '../NotFoundPage/Loadable';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import LeftFrame from '../../components/LeftFrame';
 
 const AppWrapper = styled.div`
-  max-width: calc(768px + 16px * 2);
-  margin: 40px auto;
-  display: flex;
   min-height: 100%;
-  padding: 0 16px;
-  flex-direction: column;
+  color: #bdbdbd;
+  margin-top: 40px;
 `;
+
+const ContentWrapper = styled.div`
+  padding: 20px;
+  width: calc(100% - 280px);
+  margin-left: 240px;
+  
+  @media screen and (max-width: 850px) {
+    width: calc(100% - 40px);
+    margin-left: inherit;
+  }
+`;
+
+const BodyWrapper = styled.div`
+  
+`;
+
 
 export default function App() {
   return (
@@ -27,11 +41,16 @@ export default function App() {
         <meta name="description" content="saü sözlük" />
       </Helmet>
       <Header />
-      <Switch>
-        <Route exact path="/" component={FeaturePage} />
-        <Route path="" component={NotFoundPage} />
-      </Switch>
-      <Footer />
+      <BodyWrapper>
+        <LeftFrame />
+        <ContentWrapper>
+          <Switch>
+            <Route exact path="/" component={FeaturePage} />
+            <Route path="" component={NotFoundPage} />
+          </Switch>
+          <Footer />
+        </ContentWrapper>
+      </BodyWrapper>
     </AppWrapper>
   );
 }

@@ -1,6 +1,7 @@
 import { fromJS } from 'immutable';
 import { combineReducers } from 'redux-immutable';
 import { LOCATION_CHANGE } from 'react-router-redux';
+import { loadingBarReducer } from 'react-redux-loading-bar';
 
 import globalReducer from './reducers/appReducer';
 
@@ -39,6 +40,7 @@ export default function createReducer(injectedReducers) {
   return combineReducers({
     route: routeReducer,
     global: globalReducer,
+    loadingBar: loadingBarReducer,
     ...injectedReducers,
   });
 }
