@@ -5,6 +5,8 @@ import { Switch, Route } from 'react-router-dom';
 
 import FeaturePage from '../RandomsPage/Loadable';
 import NotFoundPage from '../NotFoundPage/Loadable';
+import TodayPage from '../TodayPage/Loadable';
+
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import LeftFrame from '../../components/LeftFrame';
@@ -46,6 +48,7 @@ export default function App() {
         <ContentWrapper>
           <Switch>
             <Route exact path="/" component={FeaturePage} />
+            <Route exact path="/bugun" component={TodayPage} />
             <Route path="" component={NotFoundPage} />
           </Switch>
           <Footer />

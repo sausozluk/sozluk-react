@@ -168,6 +168,7 @@
     "prop-types": "15.5.10",
     "react": "15.6.1",
     "react-autocomplete": "^1.8.1",
+    "react-custom-scrollbars": "^4.2.1",
     "react-dd-menu": "^2.0.2",
     "react-dom": "15.6.1",
     "react-helmet": "5.1.3",
