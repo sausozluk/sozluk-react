@@ -6,12 +6,12 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import { Link } from 'react-router-dom';
 
 const LeftFrameWrapper = styled.div`
-  ${props => props.notLeft ? '' : 'border-right: 1px solid #333;'};
-  position: ${props => props.notLeft ? 'relative' : 'fixed'};
-  z-index: ${props => props.notLeft ? '0' : '2'};
+  ${(props) => props.notLeft ? '' : 'border-right: 1px solid #333;'};
+  position: ${(props) => props.notLeft ? 'relative' : 'fixed'};
+  z-index: ${(props) => props.notLeft ? '0' : '2'};
   
   @media screen and (max-width: 850px) {
-    display: ${props => props.notLeft ? 'block' : 'none'};
+    display: ${(props) => props.notLeft ? 'block' : 'none'};
   }
 `;
 
@@ -89,20 +89,18 @@ class LeftFrame extends React.PureComponent {
     }
 
 
-    this.topics = arr.map((id) => {
-      return (
-        <ListItem key={ id }>
-          <ListItemContent to={'/serdivan-ucuz-cay-veritabani--390'}>
-            <ListItemCount>
-              1
-            </ListItemCount>
-            <ListItemText>
-              serdivan ucuz çay veritabanı
-            </ListItemText>
-          </ListItemContent>
-        </ListItem>
-      );
-    });
+    this.topics = arr.map((id) => (
+      <ListItem key={id}>
+        <ListItemContent to={'/serdivan-ucuz-cay-veritabani--390'}>
+          <ListItemCount>
+            1
+          </ListItemCount>
+          <ListItemText>
+            serdivan ucuz çay veritabanı
+          </ListItemText>
+        </ListItemContent>
+      </ListItem>
+    ));
   }
 
   render() {
@@ -142,7 +140,7 @@ class LeftFrame extends React.PureComponent {
 }
 
 LeftFrame.propTypes = {
-  notLeft: PropTypes.isBoolean,
+  notLeft: PropTypes.bool,
 };
 
 export default LeftFrame;

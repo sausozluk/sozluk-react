@@ -17,7 +17,6 @@ const customHost = process.env.HOST;
 const host = customHost || null;
 const prettyHost = customHost || 'localhost';
 
-// Start your app.
 app.listen(port, host, (err) => {
   if (err) {
     return logger.error(err.message);

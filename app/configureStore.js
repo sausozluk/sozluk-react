@@ -2,8 +2,8 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { fromJS } from 'immutable';
 import { routerMiddleware } from 'react-router-redux';
 import createSagaMiddleware from 'redux-saga';
-import createReducer from './reducers';
 import { loadingBarMiddleware } from 'react-redux-loading-bar';
+import createReducer from './reducers';
 
 const sagaMiddleware = createSagaMiddleware();
 

@@ -2,11 +2,8 @@
 
 const logger = {
   error: console.error,
-
   appStarted: (port, host) => {
-    console.log(`
-Server started ${`http://${host}:${port} ✓`}
-    `);
+    console.log(`Server started ${`http://${host}:${port} ✓`}`);
   },
 };
 
