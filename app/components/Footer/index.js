@@ -5,9 +5,7 @@ import Wrapper from './Wrapper';
 function Footer() {
   return (
     <Wrapper>
-      <section>
-        saü sözlük
-      </section>
+      saü sözlük
     </Wrapper>
   );
 }

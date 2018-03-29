@@ -4,11 +4,23 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { Link } from 'react-router-dom';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+
+import injectReducer from '../../utils/injectReducer';
+import injectSaga from '../../utils/injectSaga';
+import reducer from '../../reducers/leftFrameReducer';
+import saga from '../../sagas/leftFrameSaga';
+import { makeSelectLeftFrame } from '../../selectors/leftFrameSelectors';
+import More from './More';
+import { getLeftFrame } from '../../actions/leftFrameActions';
 
 const LeftFrameWrapper = styled.div`
   ${(props) => props.notLeft ? '' : 'border-right: 1px solid #333;'};
   position: ${(props) => props.notLeft ? 'relative' : 'fixed'};
   z-index: ${(props) => props.notLeft ? '0' : '2'};
+  height: 100%;
   
   @media screen and (max-width: 850px) {
     display: ${(props) => props.notLeft ? 'block' : 'none'};
@@ -68,7 +80,7 @@ const ListItemCount = styled.span`
   border-radius: 4px;
   font-size: 8pt;
   float: right;
-  margin-right: 6px;
+  margin-right: 10px;
 `;
 
 const ListItemText = styled.span`
@@ -80,67 +92,99 @@ const ListItemText = styled.span`
 `;
 
 class LeftFrame extends React.PureComponent {
-  constructor() {
-    super();
-
-    const arr = [];
-    for (let i = 0; i < 100; i += 1) {
-      arr.push(i);
-    }
-
-
-    this.topics = arr.map((id) => (
-      <ListItem key={id}>
-        <ListItemContent to={'/serdivan-ucuz-cay-veritabani--390'}>
+  static renderTopics(topics) {
+    return topics.map((topic) => (
+      <ListItem key={topic.id}>
+        <ListItemContent to={`/${topic.slug}--${topic.id}`}>
+          {topic.count > 0 &&
           <ListItemCount>
-            1
+            {`${topic.count}`}
           </ListItemCount>
+          }
           <ListItemText>
-            serdivan ucuz çay veritabanı
+            {`${topic.title}`}
           </ListItemText>
         </ListItemContent>
       </ListItem>
     ));
   }
 
+  getMore(topics) {
+    const lastTopic = topics[topics.length - 1];
+    const lastTopicDate = lastTopic.updated_at;
+
+    this.props.fetchLeftFrame(lastTopicDate);
+  }
+
   render() {
-    const topics = this.topics;
-
+    const leftFrame = this.props.leftFrame;
+    const topics = leftFrame ? leftFrame.topics : [];
+    const topicList = LeftFrame.renderTopics(topics);
     const notLeft = this.props.notLeft || false;
+    const entryCount = leftFrame.entries_count ? leftFrame.entries_count : 'no';
+    const topicCount = leftFrame.topics_count ? leftFrame.topics_count : 'no';
 
-    const topicWrapper = !notLeft ? (
-      <Scrollbars style={{ width: 240, height: 720 }}>
+    const stairs = (
+      <StairsWrapper>
+        <TitleWrapper>
+          bugün
+          <IconWrapper>
+            <FontAwesomeIcon icon={'sync'} />
+          </IconWrapper>
+        </TitleWrapper>
+        <SubTitleWrapper>
+          {`${topicCount}`} başlık, {`${entryCount}`} entry
+        </SubTitleWrapper>
         <List>
-          { topics }
+          { topicList }
         </List>
-      </Scrollbars>
-    ) : (
-      <List>
-        { topics }
-      </List>
+        <More onClick={() => this.getMore(topics)}>
+          <FontAwesomeIcon icon={'chevron-circle-down'} style={{'width': '2em'}} />
+          biraz daha
+        </More>
+      </StairsWrapper>
     );
+
+    const wrapper = !notLeft ? (
+      <Scrollbars style={{ width: 240, height: '100%' }} autoHide>
+        { stairs }
+      </Scrollbars>
+    ) : (stairs);
 
     return (
       <LeftFrameWrapper notLeft={notLeft}>
-        <StairsWrapper>
-          <TitleWrapper>
-            bugün
-            <IconWrapper>
-              <FontAwesomeIcon icon={'sync'} />
-            </IconWrapper>
-          </TitleWrapper>
-          <SubTitleWrapper>
-            no başlık, 2 entry
-          </SubTitleWrapper>
-          { topicWrapper}
-        </StairsWrapper>
+        { wrapper }
       </LeftFrameWrapper>
     );
   }
 }
 
 LeftFrame.propTypes = {
+  leftFrame: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.bool,
+  ]),
   notLeft: PropTypes.bool,
+  fetchLeftFrame: PropTypes.func,
 };
 
-export default LeftFrame;
+export function mapDispatchToProps(dispatch) {
+  return {
+    fetchLeftFrame: (timestamp) => dispatch(getLeftFrame(timestamp)),
+  };
+}
+
+const mapStateToProps = createStructuredSelector({
+  leftFrame: makeSelectLeftFrame(),
+});
+
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
+
+const withReducer = injectReducer({ key: 'leftFrame', reducer });
+const withSaga = injectSaga({ key: 'leftFrame', saga });
+
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect,
+)(LeftFrame);
