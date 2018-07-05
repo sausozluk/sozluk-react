@@ -10,4 +10,5 @@ export default styled.span`
   color: #53a245;
   border-radius: 2px;
   transition: background-color .3s ease;
+  height: 72px;
 `;

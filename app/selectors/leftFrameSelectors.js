@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 
 const selectGlobal = (state) => state.get('global');
 
-const selectFeature = (state) => state.get('leftFrame');
+const selectLeftFrame = (state) => state.get('leftFrame');
 
 const makeSelectLoading = () => createSelector(
   selectGlobal,
@@ -15,13 +15,13 @@ const makeSelectError = () => createSelector(
 );
 
 const makeSelectLeftFrame = () => createSelector(
-  selectFeature,
-  (globalState) => globalState.get('data')
+  selectLeftFrame,
+  (globalState) => globalState.get('data').toJS()
 );
 
 export {
   selectGlobal,
-  selectFeature,
+  selectLeftFrame,
   makeSelectLeftFrame,
   makeSelectLoading,
   makeSelectError,

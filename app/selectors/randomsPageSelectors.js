@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 
 const selectGlobal = (state) => state.get('global');
 
-const selectFeature = (state) => state.get('randoms');
+const selectRandoms = (state) => state.get('randoms');
 
 const makeSelectLoading = () => createSelector(
   selectGlobal,
@@ -15,13 +15,13 @@ const makeSelectError = () => createSelector(
 );
 
 const makeSelectRandoms = () => createSelector(
-  selectFeature,
+  selectRandoms,
   (globalState) => globalState.get('data')
 );
 
 export {
   selectGlobal,
-  selectFeature,
+  selectRandoms,
   makeSelectRandoms,
   makeSelectLoading,
   makeSelectError,
